@@ -32,6 +32,15 @@ const corsOptions = {
   
   async function run() {
     try {
+
+      const servicesCollection = client.db('Farmhub').collection('services')
+
+
+      // all services get
+      app.get('/services',async(req,res) =>{
+        const result = await servicesCollection.find().toArray();
+        res.send(result)
+      })
       // Connect the client to the server	(optional starting in v4.7)
       await client.connect();
       // Send a ping to confirm a successful connection
