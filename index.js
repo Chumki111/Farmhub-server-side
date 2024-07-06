@@ -3,7 +3,7 @@ const app = express()
 require('dotenv').config()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken')
 const port = process.env.PORT || 8000
 // Farmhub
@@ -34,11 +34,24 @@ const corsOptions = {
     try {
 
       const servicesCollection = client.db('Farmhub').collection('services')
+      const productCollection = client.db('Farmhub').collection('products')
+       
 
 
+      // get all products
+      app.get('/products',async(req,res) =>{
+        const result = await productCollection.find().toArray();
+        res.send(result)
+      })
       // all services get
       app.get('/services',async(req,res) =>{
         const result = await servicesCollection.find().toArray();
+        res.send(result)
+      })
+      // get single services
+      app.get('/service/:id',async(req,res) =>{
+        const id = req.params.id;
+        const result = await servicesCollection.findOne({ _id: new ObjectId(id) });
         res.send(result)
       })
       // Connect the client to the server	(optional starting in v4.7)
