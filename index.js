@@ -6,8 +6,7 @@ const cookieParser = require('cookie-parser')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken')
 const port = process.env.PORT || 8000
-// Farmhub
-// N7C6kjDsWqyMLxxj
+
 // middleware
 const corsOptions = {
   origin: ['http://localhost:5173', 'http://localhost:5174'],
