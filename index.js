@@ -17,9 +17,6 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 
-
-
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_URL, {
   serverApi: {
@@ -71,6 +68,12 @@ async function run() {
       }
       const products = await productCollection.find(query).sort(options.sort).toArray();
       res.send(products)
+    })
+    // get single product
+    app.get('/product/:id', async (req, res) => {
+      id = req.params.id;
+      const result = await productCollection.findOne({ _id: new ObjectId(id) })
+      res.send(result)
     })
     // all services get
     app.get('/services', async (req, res) => {
